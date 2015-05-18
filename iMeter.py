@@ -1,20 +1,3 @@
-"""
----------------------------------------
-             iMonitor 
----------------------------------------
-
-Progetto di monitoraggio della "Casa di Paglia". Una piccola struttura
-in legno coibentata, che serve come modello di esempio per la misura 
-dell'energia necessaria a mantenere un certo grado termico al suo interno.
-
-Questo programma è un semplice Data Logger che registra un consumo di 
-energia elettrica, letto da un power meter con emissione di impulsi,
-e due temperature tramite sonde 1-wire, una interna e una esterna.
-
-Classe 4 Elettronica anno 2014/2015
-ISITP Verres (AO) - Italy
-"""
-
 from threading import Thread
 from threading import Timer
 import logging
@@ -31,7 +14,7 @@ def load_counter():
 		counter = int(f.readline())
 		f.close()
 		return counter
-	else
+        else:
 		return 0
 
 
@@ -46,9 +29,9 @@ def csv_log(counter, int_temp, ext_temp):
 	if not os.path.exists(filename):
 		header = "INDEX;TYPE;TIMESTAMP;Energy;IntTemp;ExtTemp"
 	f = open(filename,"w")
-	if header != ""
+        if header != "":
 		f.write(header)
-	f.write("0;LOG;"time.strftime("%d/%m/%Y %H:%M:00"), ";", str(counter), ";", int_temp, ";", ext_temp)
+	f.write("0;LOG;", time.strftime("%d/%m/%Y %H:%M:00"), ";", str(counter), ";", int_temp, ";", ext_temp)
 	f.close()
 
 
@@ -102,10 +85,10 @@ def input_counter():
         #pfio.digital_write(0,0)
 
 def main_loop():
-	print "loop"
+    print "loop"
     t = Timer(60, csv_log, args=[counter, read_temp("28-000003eba319"), read_temp("28-000003eba319")])
     t.start()
-	pass
+    pass
 
 
 pfio.init()
