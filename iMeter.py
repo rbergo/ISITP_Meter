@@ -6,7 +6,7 @@ import time
 #import piface.pfio as pfio
 import pigpio
 
-#GPIO defines
+#GPIO defines (http://cdn.keytosmart.com/wp-content/uploads/2014/07/Raspberry-Pi-GPIO-Layout-Model-B-Plus.png)
 ECI = 18 #ENERGY COUNTER INPUT
 ECO = 19 #ENERGY COUNTER OUTPUT
 TINT_ID = "28-000003eba319"
@@ -48,6 +48,8 @@ def read_temp(Temp_ID):
 	"""
 	Web page: http://www.raspberrypi-spy.co.uk/2013/03/raspberry-pi-1-wire-digital-thermometer-sensor/
 	Source: wget https://bitbucket.org/MattHawkinsUK/rpispy-misc/raw/master/python/ds18b20.py
+        ------
+        or: http://www.dreamgreenhouse.com/features/rpi/1wire/index.php
 	"""
         print "read temperature ID="+Temp_ID
 	try:
@@ -73,6 +75,7 @@ def read_temp(Temp_ID):
 def input_counter():
     print "counter thread" 
     pulsetime = 0
+    global counter
     while(1):
     
         #if pfio.digital_read(4):
@@ -89,7 +92,7 @@ def input_counter():
                 f = open("/var/log/iMeter/counter.dat","w")
                 f.write(str(counter))
                 f.close()
-        
+                print "Counter = %i" % counter     
             pulsetime = 0
             
         #wait for 10msec
