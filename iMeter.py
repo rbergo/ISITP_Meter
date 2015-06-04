@@ -88,22 +88,23 @@ def input_counter():
             if pulsetime >= 5:
                 counter = counter + 1
                 #pfio.digital_write(0,1)
-                pigpio.output(ECO, True)
+                pigpio.output(ECO, False)
                 f = open("/var/log/iMeter/counter.dat","w")
                 f.write(str(counter))
                 f.close()
                 print "Counter = %i" % counter     
+                time.sleep(0.1)
+                pigpio.output(ECO, True)		
             pulsetime = 0
             
         #wait for 10msec
         time.sleep(0.01)
-        #pfio.digital_write(0,0)
-        pigpio.output(ECO, False)
 
 
 #pfio.init()
 pigpio.setup(ECI, pigpio.IN)
 pigpio.setup(ECO, pigpio.OUT)
+pigpio.output(ECO, True)
 
 logging.basicConfig()
 log = logging.getLogger()
